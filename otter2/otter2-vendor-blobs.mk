@@ -16,6 +16,5 @@
 
 PRODUCT_COPY_FILES += \
     vendor/amazon/otter2/proprietary/bin/idme:system/bin/idme \
-    vendor/amazon/otter2/proprietary/lib/libidme.so:system/lib/libidme.so \
-    vendor/amazon/otter2/proprietary/lib/hw/sensors.otter2.so:system/lib/hw/sensors.otter2.so
+    vendor/amazon/otter2/proprietary/lib/libidme.so:system/lib/libidme.so
 

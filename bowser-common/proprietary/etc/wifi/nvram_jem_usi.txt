@@ -1,6 +1,6 @@
 # Jem for 43239 USI WIFI-Only module
 # $Copyright (C) 2012 Broadcom Corporation$
-# $Id: bcm943239LabJem_USI.txt 2012-10-8 ericen $
+# $Id: bcm943239LabJem_USI.txt 2013-1-9 roozbehp $
 # Version 2.0
 
 
@@ -11,8 +11,8 @@ boardflags=0x201
 boardflags2=0
 macaddr=00:90:4c:c5:12:38
 sromrev=9
-ag0=0x2
-ag1=0x2
+ag0=0x82
+ag1=0x82
 ag2=0xff
 ag3=0xff
 txchain=0x3
@@ -20,7 +20,7 @@ rxchain=0x3
 aa2g=3
 aa5g=3
 ccode=XZ
-regrev=21
+regrev=10
 ledbh0=0xff
 ledbh1=0xff
 ledbh2=0xff
