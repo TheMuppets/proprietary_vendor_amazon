@@ -16,7 +16,9 @@
 
 PRODUCT_COPY_FILES += \
     vendor/amazon/jem/proprietary/bin/brcm_patchram_plus:system/bin/brcm_patchram_plus \
-    vendor/amazon/jem/proprietary/vendor/firmware/bcm2076_20mhz.hcd:system/vendor/firmware/bcm2076_20mhz.hcd \
+    vendor/amazon/jem/proprietary/bin/wan_fwupdate:system/bin/wan_fwupdate \
+    vendor/amazon/jem/proprietary/bin/wankit:system/bin/wankit \
+    vendor/amazon/jem/proprietary/bin/wan_savelog:system/bin/wan_savelog \
     vendor/amazon/jem/proprietary/lib/hw/sensors.omap4.so:system/lib/hw/sensors.omap4.so \
     vendor/amazon/jem/proprietary/lib/libinvensense_hal.so:system/lib/libinvensense_hal.so \
     vendor/amazon/jem/proprietary/lib/libmllite.so:system/lib/libmllite.so \
@@ -28,5 +30,64 @@ PRODUCT_COPY_FILES += \
     vendor/amazon/jem/proprietary/vendor/firmware/fw_bcmdhd.bin:system/vendor/firmware/fw_bcmdhd.bin \
     vendor/amazon/jem/proprietary/vendor/firmware/fw_bcmdhd_apsta.bin:system/vendor/firmware/fw_bcmdhd_apsta.bin \
     vendor/amazon/jem/proprietary/vendor/firmware/fw_bcmdhd_p2p.bin:system/vendor/firmware/fw_bcmdhd_p2p.bin \
-    vendor/amazon/jem/proprietary/vendor/firmware/smc_pa.ift:system/vendor/firmware/smc_pa.ift
+    vendor/amazon/jem/proprietary/vendor/firmware/smc_pa.ift:system/vendor/firmware/smc_pa.ift \
+    vendor/amazon/jem/proprietary/vendor/bin/camera_dcc:system/vendor/bin/camera_dcc \
+    vendor/amazon/jem/proprietary/vendor/bin/provision_device:system/vendor/bin/provision_device \
+    vendor/amazon/jem/proprietary/vendor/bin/provisioning_client:system/vendor/bin/provisioning_client \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_3a_ae_mms2_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_3a_ae_mms2_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_3a_af_affw_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_3a_af_affw_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_3a_af_affw_dcc_tuning.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_3a_af_affw_dcc_tuning.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_3a_af_caf_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_3a_af_caf_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_3a_af_caf_dcc_tuning.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_3a_af_caf_dcc_tuning.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_3a_af_hllc_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_3a_af_hllc_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_3a_af_hllc_dcc_tuning.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_3a_af_hllc_dcc_tuning.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_3a_af_saf_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_3a_af_saf_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_3a_af_saf_dcc_tuning.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_3a_af_saf_dcc_tuning.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_adjust_rgb2rgb_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_alg_adjust_rgb2rgb_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_awb_alg_ti3_gains_adjust.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_awb_alg_ti3_gains_adjust.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_awb_alg_ti3_tuning.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_awb_alg_ti3_tuning.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_capabilities.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_capabilities.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_current_module_calibration.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_current_module_calibration.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ducati_eff_tun.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ducati_eff_tun.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ducati_gamma.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ducati_gamma.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ducati_lsc_2d.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ducati_lsc_2d.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ducati_nsf_ldc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ducati_nsf_ldc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_face_detect_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_face_detect_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_face_tracking_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_face_tracking_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_gbce_sw1_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_gbce_sw1_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_golden_module_calibration.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_golden_module_calibration.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_h3a_aewb_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_h3a_aewb_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_3d_lut_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_3d_lut_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_car_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_car_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_cfai_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_cfai_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_cgs_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_cgs_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_dpc_lut_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_dpc_lut_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_dpc_otf.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_dpc_otf.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_ee_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_ee_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_gic_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_gic_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_nf1_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_nf1_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_nf2_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_nf2_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_rgb2rgb_1_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_rgb2rgb_1_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_rgb2rgb_2_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_rgb2rgb_2_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_rgb2yuv_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_rgb2yuv_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_rsz_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_rsz_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_yuv444_to_yuv422_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ipipe_yuv444_to_yuv422_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_isif_clamp_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_isif_clamp_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_isif_csc_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_isif_csc_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_iss_glbce3_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_iss_glbce3_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_iss_lbce_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_iss_lbce_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_iss_scene_modes_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_iss_scene_modes_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_iss_vstab_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_iss_vstab_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ldc_cac_cfg_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ldc_cac_cfg_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ldc_cfg_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_ldc_cfg_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_lsc_interp.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_lsc_interp.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_vnf_cfg_dcc.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid44_OV9726_vnf_cfg_dcc.bin \
+    vendor/amazon/jem/proprietary/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid65535_kgen_dcc_preflash.bin:system/vendor/camera/R01_MVEN002_LD0_ND0_IR0_SH0_FL0_SVEN002_DCCID46/cid65535_kgen_dcc_preflash.bin
 
+ifeq ($(TARGET_DEVICE),jemlte)
+PRODUCT_COPY_FILES += \
+    vendor/amazon/jem/proprietary/vendor/firmware/bcm2076_26mhz.hcd:system/vendor/firmware/bcm2076_26mhz.hcd
+else
+PRODUCT_COPY_FILES += \
+    vendor/amazon/jem/proprietary/vendor/firmware/bcm2076_20mhz.hcd:system/vendor/firmware/bcm2076_20mhz.hcd
+endif

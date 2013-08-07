@@ -1,0 +1,9 @@
+#!/system/bin/sh
+echo "Starting WAN Firmware Update procedure, Please do not power off or reset your device"
+stop ril-daemon
+wankit mdmctrl wanon
+wankit wan_dloader -o -E -p /system/etc/wan
+result=$?
+sleep 1
+start ril-daemon
+echo "***Finished Updating WAN Firmware ($result)***"

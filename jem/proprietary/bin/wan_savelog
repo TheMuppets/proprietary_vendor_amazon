@@ -1,0 +1,9 @@
+#!/system/bin/sh
+if [ ! -d /data/wireless_log ]; then    
+	mkdir /data/wireless_log
+fi
+logcat -b radio -v time -d > /data/wireless_log/radio_log
+logcat -v time -d > /data/wireless_log/system_log
+dmesg > /data/wireless_log/kernel_log
+busybox cp /data/misc/wan_log /data/wireless_log/
+busybox tar cvz wireless_log -f /data/log.tgz -C /data

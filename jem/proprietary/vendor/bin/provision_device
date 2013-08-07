@@ -1,0 +1,328 @@
+#!/system/bin/sh
+
+##
+# This file should be added in the factory right after pushing the hdcp key
+#
+provision_enablefile=/efs/provision_enable
+
+logfile=/efs/provisioning_log
+statusfile=/efs/provisioning_status
+hdcp_completefile=/efs/provisioning_hdcp_complete
+playready_completefile=/efs/provisioning_playready_complete
+hdcp=/efs/provisioning/hdcp
+hdcpstatus="Fail"
+playreadystatus="Fail"
+do_prepare_done=0
+cur_date_time=
+playready=
+platform=
+hdcp_error=0
+
+PROVISION_FAILED_PPM=/system/vendor/data/images/provisioning_failed.ppm
+FB_PATH=/dev/graphics/fb0
+FAIL_FLAG=/efs/failed_provisioning
+ALWAYS_BLOCK=0
+ 
+block_Screen(){
+ 
+        # Give a chance to let other process related to DSS and FB satble
+        /system/bin/sleep 5
+ 
+        while [ true ]
+        do
+                /system/bin/touch $FAIL_FLAG
+                /system/bin/stop
+                /system/bin/cat $PROVISION_FAILED_PPM > $FB_PATH
+                /system/bin/sleep 5
+        done
+}
+ 
+# if the provisioning is not enable, skip the provisioning
+if [ ! -e $provision_enablefile ]
+then
+    echo Warning: provisioning is not enabled.
+    exit 0
+fi
+
+# do not provision if both complete file exist and disable the provisioning
+if [ -e $hdcp_completefile ] && [ -e $playready_completefile ]
+then 
+    if [ -e $provision_enablefile ]
+    then
+        /system/bin/rm $provision_enablefile
+    fi
+    echo device already provisioned
+    exit 0
+fi
+
+cur_date_time=`date +%T-%m-%d-%Y`
+echo "============= Provisioning time: $cur_date_time ================" >> $logfile
+device=`cat /proc/product_name`
+security_type=`cat /proc/product_name_extra`
+
+# starting with checking the provisioning folder
+if [ ! -e /efs/provisioning ]
+then
+    echo "Provisioning aborted.  No provisioning directories" >> $logfile
+    exit 0
+fi
+
+case "$device" in
+    Jem* )
+	platform=jem
+	;;
+    * )
+	echo "Unknown product name $device" >> $logfile
+	exit 1
+	;;
+esac
+
+case "$security_type" in
+    Dummy )
+	keys = dummy
+	playready_type=test
+	playready_wrap=dummy
+	;;
+    Eng )
+	keys = eng
+	playready_type=production
+	playready_wrap=production
+	;;
+    Prod )
+	keys = prod
+	playready_type=production
+	playready_wrap=production
+	;;
+    * )
+	echo "Unknown security type $security_type" >> $logfile
+	exit 1
+	;;
+esac
+
+echo platform=$platform >> $logfile
+
+playready="/efs/provisioning/"$playready_type"_wrapped_in_"$playready_wrap
+
+echo playready=$playready >> $logfile
+echo "[Provisioning Status]"  > $statusfile 
+
+# make sure we have the playready folder 
+# Both hdcp and playready provisioning relies on this
+# In case of second provisioning with no playready keys, we want to
+# maintain the last success provisioning status
+if [ ! -e $playready ]
+then
+    echo "Error: $playready folder is not found. Can't perform provisioning!" >> $logfile
+    if [ ! -e $hdcp_completefile ]
+    then
+        echo "HDCP:$hdcpstatus"  >> $statusfile 
+        echo "hdcpkey:Not Exist" >> $statusfile
+    else
+        echo "HDCP:Already Provisioned" >> $statusfile
+        echo "hdcpkey:Stored" >> $statusfile
+    fi
+
+    if [ ! -e $playready_completefile ]
+    then
+        echo "PlayReady:$playreadystatus" >> $statusfile
+    else
+        echo "PlayReady:Already Provisioned" >> $statusfile
+    fi
+    exit 1
+fi
+
+if [ ! -e $hdcp ] 
+then 
+    echo "Error: No HDCP provisioning directories, HDCP provisioning failed." >> $logfile
+    hdcp_error=1
+    echo "HDCP:$hdcpstatus"  >> $statusfile 
+    echo "hdcpkey:Not Exist" >> $statusfile 
+else
+    pek=`ls $playready/*pek_wrapped_TI.bin`
+    hdcpkey=`ls $hdcp/batch*key*.bin`
+fi
+
+echo "hdcpkey=$hdcpkey" >> $logfile
+
+if [ ! -n "$hdcpkey"  ] && [ $hdcp_error == 0 ]
+then 
+    echo "Error: No HDCP key existed on the device." >> $logfile
+    hdcp_error=1
+    echo "HDCP:$hdcpstatus"  >> $statusfile 
+    echo "hdcpkey:not existed" >> $statusfile 
+fi
+
+if [ ! -n "$pek"  ]  && [ $hdcp_error == 0 ]
+then 
+    echo "Error: No PEK key existed on the device." >> $logfile
+    hdcp_error=1
+    echo "HDCP:$hdcpstatus"  >> $statusfile 
+    echo "hdcpkey:$hdcpkey" >> $statusfile 
+fi
+
+##
+# In case of any error, try to get as much information as possible
+#
+if [ $hdcp_error == 1 ]
+then 
+    echo "List $hdcp folder:" >> $logfile
+    echo "`ls $hdcp`" >> $logfile
+    echo "List /efs/provisioning folder:" >> $logfile
+    echo "`ls /efs/provisioning`" >> $logfile
+    echo "List $playready folder:" >> $logfile
+    echo "`ls $playready`" >> $logfile
+fi
+
+if [ -e $hdcp_completefile ]
+then 
+    echo "HDCP:Already Provisioned"  >> $statusfile 
+    echo "hdcpkey:Removed" >> $statusfile 
+fi
+
+if [ ! -e $hdcp_completefile ] && [ $hdcp_error == 0 ]
+then
+    echo "Sart hdcp provisioning ..." >> $logfile
+
+    hdcp=/efs/provisioning/hdcp
+    if [ ! -e $hdcp ]
+    then 
+	echo "Error: No HDCP provisioning directories, HDCP provisioning failed." >> $logfile
+    else
+
+	if [ ! -e /efs/hdcp ]
+	then
+	    mkdir -p /efs/hdcp 
+	fi
+
+	if [ -e /efs/hdcp/hdcp.kek.wrapped ] && [ -e /efs/hdcp/pek.kek.wrapped ]
+	then
+	    hdcpprov=0
+	    hdcpkey="PROVISIONED"
+	    echo "HDCP already provisioned" >> $logfile
+	else
+	    if [ -e $pek ] && [ -e $hdcpkey ] && [ ! -e /efs/hdcp/hdcp.kek.wrapped ] && [ ! -e /efs/hdcp/pek.kek.wrapped ]
+	    then
+		/system/bin/hdcp-prov $pek $hdcpkey /efs/hdcp/hdcp.kek.wrapped /efs/hdcp/pek.kek.wrapped 2>&1 >> $logfile
+		hdcpprov=$?
+		echo hdcp-prov returned $hdcpprov >> $logfile
+		if [ $hdcpprov == 0 ]
+		then
+		    /system/bin/touch $hdcp_completefile
+		    echo "provisoining done at $cur_date_time" >> $hdcp_completefile
+                    echo "hdcpkey:$hdcpkey" >> $hdcp_completefile
+		else
+		    rm -R /efs/hdcp
+		    echo "Error: hdcp provisioning return error, remove /efs/hdcp folder." >>$logfile
+		fi
+	    fi
+	fi
+	
+	if [ $hdcpprov == 0 ]
+	then
+	    hdcpstatus="Pass"
+	else
+	    hdcpstatus="Fail"
+	fi
+	
+	if [ ! -e /efs/hdcp/hdcp.kek.wrapped ] || [ ! -e /efs/hdcp/pek.kek.wrapped ]
+	then
+	    hdcpstatus="Fail"
+	fi
+    fi
+    echo "HDCP:$hdcpstatus"  >> $statusfile 
+    echo "hdcpkey:$hdcpkey" >> $statusfile 
+fi
+
+if [ ! -e $playready_completefile ]
+then 
+    echo "Sart playready provisioning ..." >> $logfile
+
+    pekfile=`ls $playready/*pek_wrapped_TL*`
+
+    echo "pekfile = $pekfile" >> $logfile 
+
+    if [ -e $pekfile ]
+    then 
+	provisioning_client wipeAll 2>&1 >> $logfile
+	wipeALL=$?
+	echo wipeALL returned $wipeALL >> $logfile
+	
+	provisioning_client setPEK $pekfile 2>&1 >> $logfile
+	setPEK=$?
+	echo setPEK returned $setPEK >> $logfile
+    fi
+
+    modelcertfile=`ls $playready/*playready_model_certificate*`
+    echo "modelcertfile = $modlecertfile" >> $logfile 
+    if [ -e $modelcertfile ]
+    then
+	provisioning_client setModelCert $modelcertfile 2>&1 >> $logfile
+	setModelCert=$?
+	echo setModelCert returned $setModelCert >> $logfile
+    fi
+
+    modelkeyfile=`ls $playready/*playready_model_key*`
+    echo "modelkeyfile = $modelkeyfile" >> $logfile 
+    if [ -e $modelkeyfile ]
+    then
+	provisioning_client setModelKey $modelkeyfile 2>&1 >> $logfile
+	setModelKey=$?
+	echo setModelKey=$setModelKey >> $logfile
+    fi
+    
+    oplfile=`ls $playready/*playready_opl*`
+    echo "oplfile = $oplfile" >> $logfile 
+    if [ -e $oplfile ]
+    then
+	provisioning_client setOPLFromFile $oplfile 2>&1 >> $logfile
+	setOPLFromFile=$?
+	echo setPLFromFile returned $setOPLFromFile >> $logfile
+    fi
+
+    wmdrmmodelcertfile=`ls $playready/*wmdrm_model_certificate*`
+    echo "wmdrmmodlecertfile = $wmdrmmodelcertfile" >> $logfile 
+    if [ -e $wmdrmmodelcertfile ]
+    then
+	provisioning_client setWModelCert $wmdrmmodelcertfile 2>&1 >> $logfile
+	setWModelCert=$?
+	echo setWModelCert returned $setWModelCert >> $logfile
+    fi
+    
+    wmdrmmodelkeyfile=`ls $playready/*wmdrm_model_key*`
+    echo "wmdrmmodelkeyfile = $wmdrmmodelkeyfile" >> $logfile 
+    if [ -e $wmdrmmodelkeyfile ]
+    then
+	provisioning_client setWModelKey $wmdrmmodelkeyfile 2>&1 >> $logfile
+	setWModelKey=$?
+	echo setWModelKey returned $setWModelKey >> $logfile
+    fi
+
+    provisioning_client initialize
+    initialize=$? 
+
+    echo initialize returned $initialize >> $logfile
+    
+    if [ $initialize == 0 ]
+    then
+	playreadystatus="Pass"
+	/system/bin/touch $playready_completefile
+	echo "provisoining done at $cur_date_time" >> $playready_completefile
+    else
+	playreadystatus="Fail"
+    fi
+
+    echo "PlayReady:$playreadystatus" >> $statusfile
+
+else
+    echo "PlayReady:Already Provisioned" >> $statusfile
+fi
+
+if [ -e /efs/provisioning ]
+then
+    echo remove /efs/provisioning folder >> $logfile
+    /system/bin/rm -R /efs/provisioning 2>&1 > /dev/null
+fi
+/system/bin/sync
+
+
+
